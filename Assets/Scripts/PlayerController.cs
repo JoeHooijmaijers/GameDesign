@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
         float v = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
         Vector3 targetDirection = new Vector3(h, 0f, v);
         targetDirection = Camera.main.transform.TransformDirection(targetDirection);
+        targetDirection.y = 0.0f;
         transform.Translate(targetDirection);
     }
  
