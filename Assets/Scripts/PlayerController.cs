@@ -4,8 +4,9 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float movementSpeed;
+    public float jumpHeight;
     public float rotationSpeed;
-    
+
 
 	// Use this for initialization
 	void Start () {
@@ -19,14 +20,11 @@ public class PlayerController : MonoBehaviour {
 
     void Movement()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);     
-        transform.rotation = Quaternion.LookRotation(movement);
-
-
-        
+        float h = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
+        float v = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        Vector3 targetDirection = new Vector3(h, 0f, v);
+        targetDirection = Camera.main.transform.TransformDirection(targetDirection);
+        transform.Translate(targetDirection);
     }
  
 }

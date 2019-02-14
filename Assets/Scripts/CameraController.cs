@@ -12,6 +12,10 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        Vector3 desiredPosition = target.position + offset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+
         if (!lockedOn)
         {
             Quaternion camTurnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotationSpeed, Vector3.up);
@@ -19,8 +23,6 @@ public class CameraController : MonoBehaviour
             transform.LookAt(target);
         }
 
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Slerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
+        
     }
 }
