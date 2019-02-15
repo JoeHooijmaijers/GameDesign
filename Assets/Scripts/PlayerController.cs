@@ -9,26 +9,27 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight;
     public float rotationSpeed;
 
+    float distanceToGround;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+       distanceToGround = GetComponent<Collider>().bounds.extents.y;
+        
         Movement();
     }
 
     void Movement()
     {
-        float h = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        float v = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-        Vector3 targetDirection = new Vector3(h, 0f, v);
+        Vector3 targetDirection = new Vector3(Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime, 0f, Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime);
         targetDirection = Camera.main.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
-        transform.Translate(targetDirection);
-        //transform.rotation = Quaternion.LookRotation(targetDirection);
+        transform.Translate(targetDirection, Space.World);
+        transform.rotation = Quaternion.LookRotation(targetDirection);
 
         if (Input.GetKey("space"))
         {
@@ -38,15 +39,36 @@ public class PlayerController : MonoBehaviour {
 
     void Jump()
     {
-        float distanceToGround = GetComponent<Collider>().bounds.extents.y;
-
-        bool IsGrounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround + 0.1f);
+        bool IsGrounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround + 0.0f);
 
         if (IsGrounded)
         {
             rb.velocity += jumpHeight * Vector3.up;
         }
-        
+    } 
+
+    void DodgeRoll()
+    {
+
     }
- 
+
+    void RightArmAttack()
+    {
+
+    }
+
+    void LeftArmAttack()
+    {
+
+    }
+
+    void RightLegAttack()
+    {
+
+    }
+
+    void LeftLegAttack()
+    {
+
+    }
 }
