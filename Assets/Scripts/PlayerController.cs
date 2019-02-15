@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+    public Rigidbody rb;
+
     public float movementSpeed;
     public float jumpHeight;
     public float rotationSpeed;
@@ -10,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +28,25 @@ public class PlayerController : MonoBehaviour {
         targetDirection = Camera.main.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         transform.Translate(targetDirection);
+        //transform.rotation = Quaternion.LookRotation(targetDirection);
+
+        if (Input.GetKey("space"))
+        {
+            Jump();
+        }
+    }
+
+    void Jump()
+    {
+        float distanceToGround = GetComponent<Collider>().bounds.extents.y;
+
+        bool IsGrounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround + 0.1f);
+
+        if (IsGrounded)
+        {
+            rb.velocity += jumpHeight * Vector3.up;
+        }
+        
     }
  
 }

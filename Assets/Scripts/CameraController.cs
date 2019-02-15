@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed;
     public Vector3 offset;
     public bool lockedOn = false;
-    public float rotationSpeed = 5.0f;
+    public float rotationSpeed = 10.0f;
 
 
     void LateUpdate()
@@ -22,7 +22,5 @@ public class CameraController : MonoBehaviour
             offset = camTurnAngle * offset;
             transform.LookAt(target);
         }
-
-        
     }
 }
